@@ -5,7 +5,7 @@ param kvName string
 param kvUri string
 
 var dataFactoryLinkedServiceName = 'LS_SA_${saName}'
-var dataFactoryName = '${dfName}${uniqueString(resourceGroup().id)}'
+var dataFactoryName = '${dfName}-${uniqueString(resourceGroup().id)}'
 
 resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: dataFactoryName
