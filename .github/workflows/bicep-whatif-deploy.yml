@@ -21,6 +21,7 @@ env:
   DF_NAME: 'adf-devops'
   KV_NAME: 'kv-devops'
   CONT_NAME: 'default'
+  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1
 
 jobs:
   bicep-whatif:
@@ -44,7 +45,7 @@ jobs:
     - name: Bicep Lint
       uses: Azure/cli@v1
       with:
-        inlineScript: az bicep build --file main.bicep
+        inlineScript: az bicep build --file adf/main.bicep
         
     # Validate whether a template is valid at subscription scope
     - name: Bicep Validate
@@ -53,8 +54,8 @@ jobs:
         inlineScript: |
           az deployment sub validate \
             --name validate-${{ github.run_id }} \
-            --template-file main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONTAINER_NAME saName=$CONT_NAME dfName=$DF_NAME \
+            --template-file adf/main.bicep \
+            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONT_NAME saName=$SA_NAME dfName=$DF_NAME \
             --location $LOCATION     
 
     # Preview changes
@@ -64,8 +65,8 @@ jobs:
         inlineScript: |
           az deployment sub what-if \
             --name whatif-${{ github.run_id }} \
-            --template-file main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONTAINER_NAME saName=$CONT_NAME dfName=$DF_NAME \
+            --template-file adf/main.bicep \
+            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONT_NAME saName=$SA_NAME dfName=$DF_NAME \
             --location $LOCATION > whatif
             
       # Create string output of Whatif
@@ -137,7 +138,7 @@ jobs:
         inlineScript: |
           az deployment sub create \
             --name deploy-${{ github.run_id }} \
-            --template-file main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONTAINER_NAME saName=$CONT_NAME dfName=$DF_NAME \
+            --template-file adf/main.bicep \
+            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONT_NAME saName=$SA_NAME dfName=$DF_NAME \
             --location $LOCATION 
             

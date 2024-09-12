@@ -1,16 +1,7 @@
-@description('Data Factory Name')
 param dfName string
-
-@description('Location of the data factory.')
 param location string = resourceGroup().location
-
-@description('Name of the Azure storage account that contains the input/output data.')
 param saName string
-
-@description('Name of the Azure Key Vault that contains the secret data.')
 param kvName string
-
-@description('URI of the Azure Key Vault that contains the secret data.')
 param kvUri string
 
 var dataFactoryLinkedServiceName = 'LS_SA_${saName}'
@@ -45,7 +36,6 @@ resource keyVaultAccessPolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-07-
 resource kvLinkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
   parent: dataFactory
   name: 'LS_KV_${kvName}'
-  location: location
   properties: {
     type: 'AzureKeyVault'
     typeProperties: {
