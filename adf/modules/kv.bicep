@@ -7,7 +7,7 @@ param saId string
 @description('Name of the Azure storage account that contains the input/output data.')
 param saName string
 
-var pipelineId = '1b9d3e57-a455-4e73-ad7a-8dd331f2819b'
+var pipelineId = 'd60c9b7c-2ddb-44e5-a281-78a41c59a7cf'
 var brayanId = 'ccb234c6-838f-4d75-8332-e025d9806031'
 var tenantId = '9c07eaa2-cdd5-41ba-a19e-9d59e54a7593'
 var saKey = listKeys(saId, '2021-09-01').keys[0].value
