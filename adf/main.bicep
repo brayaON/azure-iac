@@ -5,14 +5,14 @@ param containerName string
 param saName string
 param dfName string
 
-targetScope='subscription'
+targetScope = 'subscription'
 
 resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   name: rgName
   location: location
 }
 
-module sa './sa.bicep' = {
+module sa './modules/sa.bicep' = {
   name: 'saModule'
   scope: rg
   params: {
@@ -21,7 +21,7 @@ module sa './sa.bicep' = {
   }
 }
 
-module kv './kv.bicep' = {
+module kv './modules/kv.bicep' = {
   name: 'kvModule'
   scope: rg
   params: {
@@ -35,7 +35,7 @@ module kv './kv.bicep' = {
   ]
 }
 
-module adf './adf.bicep' = {
+module adf './modules/adf.bicep' = {
   name: 'adfModule'
   scope: rg
   params: {
