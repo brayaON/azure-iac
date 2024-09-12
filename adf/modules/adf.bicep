@@ -36,7 +36,6 @@ resource keyVaultAccessPolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-07-
 resource kvLinkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
   parent: dataFactory
   name: 'LS_KV_${kvName}'
-  location: location
   properties: {
     type: 'AzureKeyVault'
     typeProperties: {

@@ -15,7 +15,7 @@ env:
   SA_NAME: 'saadfdevops'
   DF_NAME: 'adf-devops'
   KV_NAME: 'kv-devops'
-  CONT_NAME: 'default'
+  CONT_NAME: 'blobdevops'
   DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1
   
 #Special permissions required for OIDC authentication
