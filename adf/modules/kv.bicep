@@ -13,7 +13,7 @@ var tenantId = '9c07eaa2-cdd5-41ba-a19e-9d59e54a7593'
 var saKey = listKeys(saId, '2021-09-01').keys[0].value
 
 resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
-  name: kvName
+  name: '${kvName}-${uniqueString(resourceGroup().id)}'
   location: location
   properties: {
     enabledForDeployment: false
