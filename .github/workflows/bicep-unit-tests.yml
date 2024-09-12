@@ -57,7 +57,7 @@ jobs:
           az deployment sub validate \
             --name validate-${{ github.run_id }} \
             --template-file adf/main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONTAINER_NAME saName=$CONT_NAME dfName=$DF_NAME \
+            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONT_NAME saName=$SA_NAME dfName=$DF_NAME \
             --location $LOCATION
 
     # Perform a security scan of the bicep code using checkov
