@@ -16,7 +16,7 @@ resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
 }
 
 resource keyVaultAccessPolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-07-01' = {
-  name: '${kvName}/add'
+  name: '${kvName}-${uniqueString(resourceGroup().id)}/add'
   properties: {
     accessPolicies: [
       {
@@ -35,7 +35,7 @@ resource keyVaultAccessPolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-07-
 
 resource kvLinkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
   parent: dataFactory
-  name: 'LS_KV_${kvName}'
+  name: 'LS_KV_${kvName}-${uniqueString(resourceGroup().id)}'
   properties: {
     type: 'AzureKeyVault'
     typeProperties: {
@@ -55,7 +55,7 @@ resource dataFactoryLinkedService 'Microsoft.DataFactory/factories/linkedservice
         secretName: 'saconnstr'
         store: {
           type: 'LinkedServiceReference'
-          referenceName: 'LS_KV_${kvName}'
+          referenceName: 'LS_KV_${kvName}-${uniqueString(resourceGroup().id)}'
         }
       }
     }
