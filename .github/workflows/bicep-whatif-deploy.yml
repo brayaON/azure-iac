@@ -16,7 +16,7 @@ permissions:
   
 env:
   LOCATION: "eastus"
-  RG_NAME: 'rg-adf-devops'
+  RG_NAME: 'rg-adf-devops-1'
   SA_NAME: 'saadfdevops'
   DF_NAME: 'adf-devops'
   KV_NAME: 'kv-devops'
