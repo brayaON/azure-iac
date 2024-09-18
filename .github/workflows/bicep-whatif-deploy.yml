@@ -51,7 +51,7 @@ jobs:
           az deployment sub validate \
             --name validate-${{ github.run_id }} \
             --template-file apim/main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONT_NAME saName=$SA_NAME dfName=$DF_NAME \
+            --parameters rgName=$RG_NAME location=$LOCATION \
             --location $LOCATION     
 
     # Preview changes
@@ -62,7 +62,7 @@ jobs:
           az deployment sub what-if \
             --name whatif-${{ github.run_id }} \
             --template-file apim/main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONT_NAME saName=$SA_NAME dfName=$DF_NAME \
+            --parameters rgName=$RG_NAME location=$LOCATION \
             --location $LOCATION > whatif
             
       # Create string output of Whatif
@@ -135,6 +135,6 @@ jobs:
           az deployment sub create \
             --name deploy-${{ github.run_id }} \
             --template-file apim/main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONT_NAME saName=$SA_NAME dfName=$DF_NAME \
+            --parameters rgName=$RG_NAME location=$LOCATION \
             --location $LOCATION 
             
