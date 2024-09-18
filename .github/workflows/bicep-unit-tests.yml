@@ -11,11 +11,7 @@ on:
 
 env:
   LOCATION: 'eastus2'
-  RG_NAME: 'rg-adf-devops-1'
-  SA_NAME: 'saadfdevops'
-  DF_NAME: 'adf-devops'
-  KV_NAME: 'kv-devops'
-  CONT_NAME: 'blobdevops'
+  RG_NAME: 'rg-apim-test'
   DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1
   
 #Special permissions required for OIDC authentication
@@ -47,7 +43,7 @@ jobs:
     - name: 'Bicep Lint'
       uses: Azure/cli@v1
       with:
-        inlineScript: az bicep build --file adf/main.bicep
+        inlineScript: az bicep build --file apim/main.bicep
         
     # Validate whether a template is valid at subscription scope
     - name: 'Bicep Validate'
@@ -56,8 +52,8 @@ jobs:
         inlineScript: |
           az deployment sub validate \
             --name validate-${{ github.run_id }} \
-            --template-file adf/main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION kvName=$KV_NAME containerName=$CONT_NAME saName=$SA_NAME dfName=$DF_NAME \
+            --template-file apim/main.bicep \
+            --parameters rgName=$RG_NAME location=$LOCATION \
             --location $LOCATION
 
     # Perform a security scan of the bicep code using checkov
