@@ -10,6 +10,9 @@ resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
 
 var sitesCount = 2
 
+// kennethreitz/httpbin
+// openlibrary/olbase
+
 module sites 'br/public:avm/res/web/site:0.8.0' = [
   for i in range(0, sitesCount): {
     name: 'site${i}Deployment'
