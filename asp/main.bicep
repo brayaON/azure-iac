@@ -8,40 +8,31 @@ resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   location: location
 }
 
-module site 'br/public:avm/res/web/site:0.8.0' = {
-  name: 'siteDeployment'
-  scope: rg
-  params: {
-    // Required parameters
-    kind: 'app,linux,container'
-    name: 'apitest${uniqueString(rg.id)}'
-    serverFarmResourceId: serverfarm.outputs.resourceId
-    // Non-required parameters
-    location: location
-    siteConfig: {
-      appSettings: [
-        {
-          name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
-          value: 'false'
-        }
-      ]
-      linuxFxVersion: 'DOCKER|mcr.microsoft.com/appsvc/staticsite:latest'
+var sitesCount = 2
+
+module sites 'br/public:avm/res/web/site:0.8.0' = [
+  for i in range(0, sitesCount): {
+    name: 'site${i}Deployment'
+    scope: rg
+    params: {
+      // Required parameters
+      kind: 'app,linux,container'
+      name: 'apitest${uniqueString(rg.id)}'
+      serverFarmResourceId: serverfarm.outputs.resourceId
+      // Non-required parameters
+      location: location
+      siteConfig: {
+        appSettings: [
+          {
+            name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
+            value: 'false'
+          }
+        ]
+        linuxFxVersion: 'DOCKER|mcr.microsoft.com/appsvc/staticsite:latest'
+      }
     }
   }
-}
-
-module site2 'br/public:avm/res/web/site:0.8.0' = {
-  name: 'site2Deployment'
-  scope: rg
-  params: {
-    // Required parameters
-    kind: 'app,linux'
-    name: 'linuxapp${uniqueString(rg.id)}'
-    serverFarmResourceId: serverfarm.outputs.resourceId
-    // Non-required parameters
-    location: location
-  }
-}
+]
 
 module serverfarm 'br/public:avm/res/web/serverfarm:0.2.2' = {
   name: 'serverfarmDeployment'
