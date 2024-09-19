@@ -11,7 +11,7 @@ on:
 
 env:
   LOCATION: 'eastus2'
-  RG_NAME: 'rg-apim-test'
+  RG_NAME: 'rg-asp-test'
   DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1
   
 #Special permissions required for OIDC authentication
@@ -43,7 +43,7 @@ jobs:
     - name: 'Bicep Lint'
       uses: Azure/cli@v1
       with:
-        inlineScript: az bicep build --file apim/main.bicep
+        inlineScript: az bicep build --file asp/main.bicep
         
     # Validate whether a template is valid at subscription scope
     - name: 'Bicep Validate'
@@ -52,7 +52,7 @@ jobs:
         inlineScript: |
           az deployment sub validate \
             --name validate-${{ github.run_id }} \
-            --template-file apim/main.bicep \
+            --template-file asp/main.bicep \
             --parameters rgName=$RG_NAME location=$LOCATION \
             --location $LOCATION
 
