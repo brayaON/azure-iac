@@ -13,7 +13,7 @@ module service 'br/public:avm/res/api-management/service:0.1.0' = {
   scope: rg
   params: {
     // Required parameters
-    name: 'apimboftest'
+    name: 'apim01${uniqueString(rg.id)}'
     publisherEmail: 'bof.23402@mail.windowsazure.com'
     publisherName: 'bof-23402'
     // Non-required parameters
