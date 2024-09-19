@@ -14,7 +14,7 @@ module site 'br/public:avm/res/web/site:0.8.0' = {
   params: {
     // Required parameters
     kind: 'app,linux,container'
-    name: 'apitest001'
+    name: 'apitest${uniqueString(rg.id)}'
     serverFarmResourceId: serverfarm.outputs.resourceId
     // Non-required parameters
     location: location
