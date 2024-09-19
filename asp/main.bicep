@@ -29,6 +29,20 @@ module site 'br/public:avm/res/web/site:0.8.0' = {
     }
   }
 }
+
+module site2 'br/public:avm/res/web/site:0.8.0' = {
+  name: 'site2Deployment'
+  scope: rg
+  params: {
+    // Required parameters
+    kind: 'app,linux'
+    name: 'linuxapp${uniqueString(rg.id)}'
+    serverFarmResourceId: serverfarm.outputs.resourceId
+    // Non-required parameters
+    location: location
+  }
+}
+
 module serverfarm 'br/public:avm/res/web/serverfarm:0.2.2' = {
   name: 'serverfarmDeployment'
   scope: rg
