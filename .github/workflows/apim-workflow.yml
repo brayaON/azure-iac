@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'apim/'
+      - 'apim/**'
 
 jobs:
   call-baseline-workflow-passing-data:

@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'asp/**'
 
 jobs:
   call-baseline-workflow-passing-data:
@@ -14,3 +16,4 @@ jobs:
     with:
       modulePath: 'asp/'
       rgName: 'rg-asp-poc'
+    secrets: inherit
