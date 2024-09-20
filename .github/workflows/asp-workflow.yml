@@ -1,3 +1,4 @@
+name: App Service Plan Deploy
 on: 
   push:
     branches:

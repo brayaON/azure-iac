@@ -1,4 +1,4 @@
-name: 'Bicep Whatif / Deploy Template'
+name: 'Module Deploy Template'
 
 on: 
   workflow_call:
