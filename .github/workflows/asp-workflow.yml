@@ -1,0 +1,17 @@
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - 'asp/'
+
+jobs:
+  call-baseline-workflow-passing-data:
+    name: "Run"
+    permissions:
+      id-token: write
+      contents: read
+    uses: .github/workflows/deploy-module-template.yml
+    with:
+      modulePath: 'asp/'
+      rgName: 'rg-asp-poc'

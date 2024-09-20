@@ -1,22 +1,19 @@
-name: 'Bicep Whatif / Deploy'
+name: 'Bicep Whatif / Deploy Template'
 
 on: 
-  push:
-    branches:
-    - main
-  pull_request:
-    branches:
-    - main
+  workflow_call:
+    inputs:
+      modulePath:
+        type: string
+        description: 'Relative path to the module'
+        required: true
+      rgName:
+        type: string
+        description: 'Resource Group name'
+        required: true
 
-#Special permissions required for OIDC authentication
-permissions:
-  id-token: write
-  contents: read
-  pull-requests: write
-  
 env:
   LOCATION: "eastus2"
-  RG_NAME: 'rg-apim-test'
   DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1
 
 jobs:
@@ -25,11 +22,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
 
-    # Authenticate to Az CLI using OIDC
     - name: 'Az CLI login'
       uses: azure/login@v1
       with:
@@ -41,7 +36,7 @@ jobs:
     - name: Bicep Lint
       uses: Azure/cli@v1
       with:
-        inlineScript: az bicep build --file apim/main.bicep
+        inlineScript: az bicep build --file ${{ inputs.modulePath }}/main.bicep
         
     # Validate whether a template is valid at subscription scope
     - name: Bicep Validate
@@ -50,8 +45,8 @@ jobs:
         inlineScript: |
           az deployment sub validate \
             --name validate-${{ github.run_id }} \
-            --template-file apim/main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION \
+            --template-file ${{ inputs.modulePath }}/main.bicep \
+            --parameters rgName=${{ inputs.rgName }} location=$LOCATION \
             --location $LOCATION     
 
     # Preview changes
@@ -61,8 +56,8 @@ jobs:
         inlineScript: |
           az deployment sub what-if \
             --name whatif-${{ github.run_id }} \
-            --template-file apim/main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION \
+            --template-file ${{ inputs.modulePath }}/main.bicep \
+            --parameters rgName=${{ inputs.rgName }} location=$LOCATION \
             --location $LOCATION > whatif
             
       # Create string output of Whatif
@@ -108,7 +103,6 @@ jobs:
             
   bicep-deploy:
     name: 'Bicep Deploy'
-    #TODO can we easily determine if there are any changes to deploy?
     if: github.ref == 'refs/heads/main' 
     runs-on: ubuntu-latest
     environment: production
@@ -134,7 +128,7 @@ jobs:
         inlineScript: |
           az deployment sub create \
             --name deploy-${{ github.run_id }} \
-            --template-file apim/main.bicep \
-            --parameters rgName=$RG_NAME location=$LOCATION \
+            --template-file ${{ inputs.modulePath }}/main.bicep \
+            --parameters rgName=${{ inputs.rgName }} location=$LOCATION \
             --location $LOCATION 
             
