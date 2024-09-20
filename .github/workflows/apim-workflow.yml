@@ -11,7 +11,7 @@ jobs:
     permissions:
       id-token: write 
       contents: read
-    uses: .github/workflows/deploy-module-template.yml
+    uses: ./.github/workflows/deploy-module-template.yml
     with:
       modulePath: 'apim/'
       rgName: 'rg-apim-poc'
