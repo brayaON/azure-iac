@@ -8,7 +8,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   location: location
 }
 
-var sitesCount = 2
+var sitesCount = 1
 
 // kennethreitz/httpbin
 // openlibrary/olbase
