@@ -16,3 +16,4 @@ jobs:
     with:
       modulePath: 'apim/'
       rgName: 'rg-apim-poc'
+    secrets: inherit
