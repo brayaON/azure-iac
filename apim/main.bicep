@@ -14,8 +14,8 @@ module service 'br/public:avm/res/api-management/service:0.1.0' = {
   params: {
     // Required parameters
     name: 'apim01${uniqueString(rg.id)}'
-    publisherEmail: 'bof.23402@mail.windowsazure.com'
-    publisherName: 'bof-23402'
+    publisherEmail: 'bof_devops@mail.com'
+    publisherName: 'bof_devops'
     // Non-required parameters
     location: location
     sku: 'Developer'
