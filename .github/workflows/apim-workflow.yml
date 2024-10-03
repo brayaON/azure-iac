@@ -15,5 +15,5 @@ jobs:
     uses: ./.github/workflows/deploy-module-template.yml
     with:
       modulePath: 'apim/'
-      rgName: 'rg-apim-video'
+      rgName: 'rg-apim-poc'
     secrets: inherit

@@ -13,7 +13,7 @@ module service 'br/public:avm/res/api-management/service:0.1.0' = {
   scope: rg
   params: {
     // Required parameters
-    name: 'apim-001${uniqueString(rg.id)}'
+    name: 'apim-0001${uniqueString(rg.id)}'
     publisherEmail: 'bof_devops@mail.com'
     publisherName: 'bof_devops'
     // Non-required parameters
