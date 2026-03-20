@@ -1,0 +1,25 @@
+# ============================================================================
+# Azure ML Workspace Deploy
+# Mirrors the repo's existing pattern (apim-workflow.yml, asp-workflow.yml)
+# ============================================================================
+
+name: Azure ML Workspace Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'aml/**'
+
+jobs:
+  call-baseline-workflow-passing-data:
+    name: 'Run'
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/deploy-module-template.yml
+    with:
+      modulePath: 'aml/'
+      rgName: 'rg-aml-ai300-dev'
+    secrets: inherit
