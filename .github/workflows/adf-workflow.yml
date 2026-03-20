@@ -1,0 +1,19 @@
+name: Azure Data Factory Deploy
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - 'adf/**'
+
+jobs:
+  call-baseline-workflow-passing-data:
+    name: "Run"
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/deploy-module-template.yml
+    with:
+      modulePath: 'adf/'
+      rgName: 'rg-asp-poc'
+    secrets: inherit
