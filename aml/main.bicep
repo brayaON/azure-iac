@@ -54,19 +54,6 @@ module workspace './modules/workspace.bicep' = {
   }
 }
 
-// ─── CI/CD SP — User Access Administrator on RG ───────────────────────────────
-// Required so the CI/CD SP can write role assignments (e.g. AcrPull on ACR)
-// during deployments. Scoped to the resource group, not the subscription.
-
-module cicdUaaRg './modules/cicd-uaa.bicep' = if (!empty(cicdSpPrincipalId)) {
-  name: 'cicdUaaModule'
-  scope: rg
-  params: {
-    cicdSpPrincipalId: cicdSpPrincipalId
-    rgId: rg.id
-  }
-}
-
 // ─── RBAC Module ──────────────────────────────────────────────────────────────
 // Only deployed when principal IDs are provided.
 // Condition check prevents empty-string assignments from erroring.
