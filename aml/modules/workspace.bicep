@@ -127,6 +127,22 @@ resource computeCluster 'Microsoft.MachineLearningServices/workspaces/computes@2
   }
 }
 
+// ─── 8. AcrPull role → workspace managed identity ─────────────────────────────
+// Allows the workspace to pull images from the linked Container Registry
+// using its system-assigned identity (no admin credentials needed).
+
+var acrPullRoleId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+
+resource acrPullAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(containerRegistry.id, amlWorkspace.id, acrPullRoleId)
+  scope: containerRegistry
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', acrPullRoleId)
+    principalId: amlWorkspace.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 // ─── Outputs ──────────────────────────────────────────────────────────────────
 
 output workspaceName      string = amlWorkspace.name
