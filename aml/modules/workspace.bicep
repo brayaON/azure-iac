@@ -11,9 +11,8 @@ param baseName      string
 param location      string
 param environment   string
 
-// randomSuffix uses newGuid() so Key Vault and AML workspace get a new name
-// on every deployment — avoids the 90-day soft-delete purge conflict.
-param randomSuffix  string = substring(newGuid(), 0, 3)
+// randomSuffix is passed from main.bicep — avoids the 90-day soft-delete purge conflict.
+param randomSuffix  string
 
 var suffix = take(uniqueString(resourceGroup().id), 6)
 
