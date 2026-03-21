@@ -8,9 +8,11 @@ param location    string = 'eastus'
 param baseName    string = 'ai300dev'
 param environment string = 'dev'
 
-// Generates a new random 3-char suffix on each deployment to avoid Key Vault
-// and AML workspace 90-day soft-delete purge conflicts on recreate.
-param randomSuffix string = substring(newGuid(), 0, 3)
+// Optional suffix to avoid 90-day soft-delete purge conflicts on recreate.
+// Leave empty for normal deployments (idempotent).
+// Pass a value (e.g. randomSuffix=abc) only when intentionally recreating
+// a soft-deleted Key Vault or AML workspace.
+param randomSuffix string = ''
 
 // ─── RBAC principal IDs ───────────────────────────────────────────────────────
 // Pass these via dev.bicepparam — never hardcode object IDs in templates.
