@@ -46,6 +46,7 @@ module workspace './modules/workspace.bicep' = {
     baseName:    baseName
     location:    location
     environment: environment
+    randomSuffix: substring(newGuid(), 0, 3)
   }
 }
 
@@ -64,7 +65,6 @@ module rbac './modules/rbac.bicep' = if (!empty(mariaPrincipalId)) {
     cicdSpPrincipalId:  cicdSpPrincipalId
     devopsGroupObjectId: devopsGroupObjectId
   }
-  dependsOn: [workspace]
 }
 
 // ─── Outputs ──────────────────────────────────────────────────────────────────
