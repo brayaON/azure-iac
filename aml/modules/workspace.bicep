@@ -7,18 +7,22 @@
 // when the workspace is created — no manual registration needed.
 // ============================================================================
 
-param baseName    string
-param location    string
-param environment string
+param baseName      string
+param location      string
+param environment   string
+
+// randomSuffix uses newGuid() so Key Vault and AML workspace get a new name
+// on every deployment — avoids the 90-day soft-delete purge conflict.
+param randomSuffix  string = substring(newGuid(), 0, 3)
 
 var suffix = take(uniqueString(resourceGroup().id), 6)
 
 var storageAccountName = toLower(take('${baseName}st${suffix}', 24))
-var keyVaultName       = toLower(take('${baseName}kv${suffix}', 24))
+var keyVaultName       = toLower(take('${baseName}kv${randomSuffix}${suffix}', 24))
 var acrName            = toLower(take('${baseName}acr${suffix}', 50))
 var logAnalyticsName   = '${baseName}-logs'
 var appInsightsName    = '${baseName}-insights'
-var workspaceName      = '${baseName}-aml-ws'
+var workspaceName      = '${baseName}-aml-ws-${randomSuffix}'
 
 // ─── 1. Storage Account ───────────────────────────────────────────────────────
 
