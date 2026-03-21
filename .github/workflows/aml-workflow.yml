@@ -11,6 +11,12 @@ on:
       - main
     paths:
       - 'aml/**'
+  workflow_dispatch:
+    inputs:
+      randomSuffix:
+        description: '3-char suffix for KV/AML names (only needed when recreating soft-deleted resources)'
+        required: false
+        default: ''
 
 jobs:
   call-baseline-workflow-passing-data:
@@ -22,4 +28,5 @@ jobs:
     with:
       modulePath: 'aml/'
       rgName: 'rg-aml-ai300-dev'
+      randomSuffix: ${{ inputs.randomSuffix || '' }}
     secrets: inherit

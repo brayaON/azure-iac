@@ -11,6 +11,11 @@ on:
         type: string
         description: 'Resource Group name'
         required: true
+      randomSuffix:
+        type: string
+        description: '3-char suffix for soft-delete conflict avoidance (leave empty for normal deploys)'
+        required: false
+        default: ''
 
 env:
   LOCATION: "eastus2"
@@ -46,8 +51,8 @@ jobs:
           az deployment sub validate \
             --name validate-${{ github.run_id }} \
             --template-file ${{ inputs.modulePath }}/main.bicep \
-            --parameters rgName=${{ inputs.rgName }} location=$LOCATION \
-            --location $LOCATION     
+            --parameters rgName=${{ inputs.rgName }} location=$LOCATION randomSuffix=${{ inputs.randomSuffix }} \
+            --location $LOCATION
 
     # Preview changes
     - name: "What-If"
@@ -57,7 +62,7 @@ jobs:
           az deployment sub what-if \
             --name whatif-${{ github.run_id }} \
             --template-file ${{ inputs.modulePath }}/main.bicep \
-            --parameters rgName=${{ inputs.rgName }} location=$LOCATION \
+            --parameters rgName=${{ inputs.rgName }} location=$LOCATION randomSuffix=${{ inputs.randomSuffix }} \
             --location $LOCATION > whatif
             
       # Create string output of Whatif
@@ -129,6 +134,6 @@ jobs:
           az deployment sub create \
             --name deploy-${{ github.run_id }} \
             --template-file ${{ inputs.modulePath }}/main.bicep \
-            --parameters rgName=${{ inputs.rgName }} location=$LOCATION \
-            --location $LOCATION 
+            --parameters rgName=${{ inputs.rgName }} location=$LOCATION randomSuffix=${{ inputs.randomSuffix }} \
+            --location $LOCATION
             
