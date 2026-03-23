@@ -50,8 +50,8 @@ param modelDeployments array = [
     deploymentCapacity: 1
   }
   {
-    deploymentName: 'mistral-small-2503'
-    modelName: 'Mistral-small-2503'
+    deploymentName: 'mistral-large-3'
+    modelName: 'Mistral-Large-3'
     modelFormat: 'Mistral AI'
     modelVersion: '1'
     deploymentSkuName: 'GlobalStandard'
