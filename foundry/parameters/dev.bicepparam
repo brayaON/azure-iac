@@ -37,7 +37,7 @@ param modelDeployments = [
   {
     deploymentName: 'kimi-k2-thinking'
     modelName: 'Kimi-K2-Thinking'
-    modelFormat: 'Moonshot AI'
+    modelFormat: 'MoonshotAI'
     modelVersion: '1'
     deploymentSkuName: 'GlobalStandard'
     deploymentCapacity: 1
