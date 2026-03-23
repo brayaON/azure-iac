@@ -52,6 +52,7 @@ resource foundryProject 'Microsoft.CognitiveServices/accounts/projects@2025-06-0
   }
 }
 
+@batchSize(1)
 resource modelDeploymentsResource 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = [for deployment in modelDeployments: {
   parent: foundryAccount
   name: deployment.deploymentName
