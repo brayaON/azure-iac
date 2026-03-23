@@ -9,6 +9,7 @@ param environment string
 param projectName string
 param deploymentName string
 param modelName string
+param modelFormat string
 param modelVersion string
 
 @allowed([
@@ -65,12 +66,16 @@ resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-
     capacity: deploymentCapacity
   }
   properties: {
-    model: {
-      format: 'OpenAI'
-      name: modelName
-      publisher: 'OpenAI'
-      version: modelVersion
-    }
+    model: empty(modelVersion)
+      ? {
+          format: modelFormat
+          name: modelName
+        }
+      : {
+          format: modelFormat
+          name: modelName
+          version: modelVersion
+        }
     versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
   }
 }

@@ -9,8 +9,9 @@ param baseName = 'aifdev'
 param environment = 'dev'
 
 param projectName = 'aifdev-project'
-param deploymentName = 'gpt-41-mini'
-param modelName = 'gpt-4.1-mini'
-param modelVersion = '2025-04-14'
+param deploymentName = 'deepseek-r1'
+param modelName = 'DeepSeek-R1'
+param modelFormat = 'DeepSeek'
+param modelVersion = ''
 param deploymentSkuName = 'GlobalStandard'
 param deploymentCapacity = 1
