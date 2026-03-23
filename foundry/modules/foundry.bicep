@@ -52,9 +52,15 @@ resource foundryProject 'Microsoft.CognitiveServices/accounts/projects@2025-06-0
   parent: foundryAccount
   name: projectName
   location: location
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     displayName: projectName
     description: 'Azure AI Foundry project for ${environment}'
+  }
+  tags: {
+    environment: environment
   }
 }
 
