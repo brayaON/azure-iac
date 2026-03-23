@@ -1,0 +1,21 @@
+name: Azure AI Foundry Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'foundry/**'
+  workflow_dispatch:
+
+jobs:
+  call-baseline-workflow-passing-data:
+    name: 'Run'
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/deploy-module-template.yml
+    with:
+      modulePath: 'foundry/'
+      rgName: 'rg-foundry-aif-dev'
+    secrets: inherit
