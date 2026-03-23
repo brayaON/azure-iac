@@ -16,13 +16,27 @@ param randomSuffix string = ''
 param projectName string = '${baseName}-project'
 
 @description('Model deployment name used by applications.')
-param deploymentName string = 'gpt-41-mini'
+param deploymentName string = 'deepseek-r1'
 
 @description('Base model to deploy to the Foundry resource.')
-param modelName string = 'gpt-4.1-mini'
+param modelName string = 'DeepSeek-R1'
 
-@description('Pinned model version. Override when you intentionally want a newer model build.')
-param modelVersion string = '2025-04-14'
+@description('Model provider/format as exposed by Azure AI Foundry model listings.')
+@allowed([
+  'DeepSeek'
+  'OpenAI'
+  'Microsoft'
+  'Meta'
+  'Mistral AI'
+  'Cohere'
+  'AI21 Labs'
+  'Core42'
+  'xAI'
+])
+param modelFormat string = 'DeepSeek'
+
+@description('Optional pinned model version. Leave empty to let Azure choose the default available version.')
+param modelVersion string = ''
 
 @description('Deployment SKU. GlobalStandard is the safest default for gpt-4.1-mini availability.')
 @allowed([
@@ -54,6 +68,7 @@ module foundry './modules/foundry.bicep' = {
     projectName: projectName
     deploymentName: deploymentName
     modelName: modelName
+    modelFormat: modelFormat
     modelVersion: modelVersion
     deploymentSkuName: deploymentSkuName
     deploymentCapacity: deploymentCapacity
