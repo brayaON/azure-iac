@@ -12,6 +12,6 @@ param projectName = 'aifdev-project'
 param deploymentName = 'deepseek-r1'
 param modelName = 'DeepSeek-R1'
 param modelFormat = 'DeepSeek'
-param modelVersion = ''
+param modelVersion = '1'
 param deploymentSkuName = 'GlobalStandard'
 param deploymentCapacity = 1

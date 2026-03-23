@@ -35,8 +35,8 @@ param modelName string = 'DeepSeek-R1'
 ])
 param modelFormat string = 'DeepSeek'
 
-@description('Optional pinned model version. Leave empty to let Azure choose the default available version.')
-param modelVersion string = ''
+@description('Pinned model version for the selected model.')
+param modelVersion string = '1'
 
 @description('Deployment SKU. GlobalStandard is the safest default for gpt-4.1-mini availability.')
 @allowed([

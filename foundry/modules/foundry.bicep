@@ -66,16 +66,11 @@ resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-
     capacity: deploymentCapacity
   }
   properties: {
-    model: empty(modelVersion)
-      ? {
-          format: modelFormat
-          name: modelName
-        }
-      : {
-          format: modelFormat
-          name: modelName
-          version: modelVersion
-        }
+    model: {
+      format: modelFormat
+      name: modelName
+      version: modelVersion
+    }
     versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
   }
 }
