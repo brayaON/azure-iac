@@ -7,19 +7,7 @@ param baseName string
 param location string
 param environment string
 param projectName string
-param deploymentName string
-param modelName string
-param modelFormat string
-param modelVersion string
-
-@allowed([
-  'GlobalStandard'
-  'Standard'
-])
-param deploymentSkuName string
-
-@minValue(1)
-param deploymentCapacity int
+param modelDeployments array
 
 var suffix = take(uniqueString(resourceGroup().id), 6)
 var accountName = toLower(take(replace('${baseName}fd${suffix}', '-', ''), 24))
@@ -64,24 +52,24 @@ resource foundryProject 'Microsoft.CognitiveServices/accounts/projects@2025-06-0
   }
 }
 
-resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
+resource modelDeploymentsResource 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = [for deployment in modelDeployments: {
   parent: foundryAccount
-  name: deploymentName
+  name: deployment.deploymentName
   sku: {
-    name: deploymentSkuName
-    capacity: deploymentCapacity
+    name: deployment.deploymentSkuName
+    capacity: deployment.deploymentCapacity
   }
   properties: {
     model: {
-      format: modelFormat
-      name: modelName
-      version: modelVersion
+      format: deployment.modelFormat
+      name: deployment.modelName
+      version: deployment.modelVersion
     }
     versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
   }
-}
+}]
 
 output accountName string = foundryAccount.name
 output accountId string = foundryAccount.id
 output projectResourceName string = foundryProject.name
-output deploymentResourceName string = modelDeployment.name
+output deploymentResourceNames array = [for deployment in modelDeployments: deployment.deploymentName]
