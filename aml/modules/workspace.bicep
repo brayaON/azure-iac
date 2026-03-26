@@ -134,7 +134,7 @@ resource computeCluster 'Microsoft.MachineLearningServices/workspaces/computes@2
 var acrPullRoleId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
 
 resource acrPullAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(containerRegistry.id, computeCluster.identity.principalId, acrPullRoleId)
+  name: guid(containerRegistry.id, computeCluster.id, acrPullRoleId)
   scope: containerRegistry
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', acrPullRoleId)
