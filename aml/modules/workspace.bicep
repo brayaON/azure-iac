@@ -109,11 +109,14 @@ resource amlWorkspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' 
 }
 
 // ─── 7. Compute Cluster ───────────────────────────────────────────────────────
+// System-assigned identity is required so the cluster can pull images from ACR
+// when executing jobs. The workspace identity alone is not sufficient.
 
 resource computeCluster 'Microsoft.MachineLearningServices/workspaces/computes@2024-04-01' = {
   parent: amlWorkspace
   name: 'cpu-cluster-01'
   location: location
+  identity: { type: 'SystemAssigned' }
   properties: {
     computeType: 'AmlCompute'
     properties: {
@@ -129,18 +132,18 @@ resource computeCluster 'Microsoft.MachineLearningServices/workspaces/computes@2
   }
 }
 
-// ─── 8. AcrPull role → workspace managed identity ─────────────────────────────
-// Allows the workspace to pull images from the linked Container Registry
-// using its system-assigned identity (no admin credentials needed).
+// ─── 8. AcrPull role → compute cluster managed identity ───────────────────────
+// The compute cluster's system-assigned identity (not the workspace identity)
+// is what actually pulls images from ACR when running jobs.
 
 var acrPullRoleId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
 
 resource acrPullAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(containerRegistry.id, amlWorkspace.id, acrPullRoleId)
+  name: guid(containerRegistry.id, computeCluster.id, acrPullRoleId)
   scope: containerRegistry
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', acrPullRoleId)
-    principalId: amlWorkspace.identity.principalId
+    principalId: computeCluster.identity.principalId
     principalType: 'ServicePrincipal'
   }
 }
