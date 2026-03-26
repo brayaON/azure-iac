@@ -8,12 +8,6 @@ param location    string = 'eastus'
 param baseName    string = 'ai300dev'
 param environment string = 'dev'
 
-// Optional suffix to avoid 90-day soft-delete purge conflicts on recreate.
-// Leave empty for normal deployments (idempotent).
-// Pass a value (e.g. randomSuffix=abc) only when intentionally recreating
-// a soft-deleted Key Vault or AML workspace.
-param randomSuffix string = ''
-
 // ─── RBAC principal IDs ───────────────────────────────────────────────────────
 // Pass these via dev.bicepparam — never hardcode object IDs in templates.
 
@@ -52,7 +46,6 @@ module workspace './modules/workspace.bicep' = {
     baseName:    baseName
     location:    location
     environment: environment
-    randomSuffix: randomSuffix
   }
 }
 
