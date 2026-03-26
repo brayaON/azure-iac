@@ -127,21 +127,6 @@ resource computeCluster 'Microsoft.MachineLearningServices/workspaces/computes@2
   }
 }
 
-// ─── 8. AcrPull role → compute cluster managed identity ───────────────────────
-// The compute cluster's system-assigned identity (not the workspace identity)
-// is what actually pulls images from ACR when running jobs.
-
-var acrPullRoleId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
-
-resource acrPullAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(containerRegistry.id, computeCluster.id, acrPullRoleId)
-  scope: containerRegistry
-  properties: {
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', acrPullRoleId)
-    principalId: computeCluster.identity.principalId
-    principalType: 'ServicePrincipal'
-  }
-}
 
 // ─── Outputs ──────────────────────────────────────────────────────────────────
 
