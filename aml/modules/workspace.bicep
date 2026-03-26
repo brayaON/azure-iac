@@ -11,19 +11,14 @@ param baseName      string
 param location      string
 param environment   string
 
-// randomSuffix is passed from main.bicep — avoids the 90-day soft-delete purge conflict.
-param randomSuffix  string
-
 var suffix = take(uniqueString(resourceGroup().id), 6)
 
 var storageAccountName = toLower(take('${baseName}st${suffix}', 24))
-var kvRandPart         = empty(randomSuffix) ? '' : '${randomSuffix}'
-var wsRandPart         = empty(randomSuffix) ? '' : '-${randomSuffix}'
-var keyVaultName       = toLower(take('${baseName}kv${kvRandPart}${suffix}', 24))
+var keyVaultName       = toLower(take('${baseName}kv${suffix}', 24))
 var acrName            = toLower(take('${baseName}acr${suffix}', 50))
 var logAnalyticsName   = '${baseName}-logs'
 var appInsightsName    = '${baseName}-insights'
-var workspaceName      = '${baseName}-aml-ws${wsRandPart}'
+var workspaceName      = '${baseName}-aml-ws'
 
 // ─── 1. Storage Account ───────────────────────────────────────────────────────
 
