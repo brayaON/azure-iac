@@ -51,7 +51,7 @@ jobs:
           az deployment sub validate \
             --name validate-${{ github.run_id }} \
             --template-file ${{ inputs.modulePath }}/main.bicep \
-            --parameters rgName=${{ inputs.rgName }} location=$LOCATION randomSuffix=${{ inputs.randomSuffix }} \
+            --parameters rgName=${{ inputs.rgName }} location=$LOCATION \
             --location $LOCATION
 
     # Preview changes
@@ -62,7 +62,7 @@ jobs:
           az deployment sub what-if \
             --name whatif-${{ github.run_id }} \
             --template-file ${{ inputs.modulePath }}/main.bicep \
-            --parameters rgName=${{ inputs.rgName }} location=$LOCATION randomSuffix=${{ inputs.randomSuffix }} \
+            --parameters rgName=${{ inputs.rgName }} location=$LOCATION \
             --location $LOCATION > whatif
             
       # Create string output of Whatif
@@ -134,6 +134,6 @@ jobs:
           az deployment sub create \
             --name deploy-${{ github.run_id }} \
             --template-file ${{ inputs.modulePath }}/main.bicep \
-            --parameters rgName=${{ inputs.rgName }} location=$LOCATION randomSuffix=${{ inputs.randomSuffix }} \
+            --parameters rgName=${{ inputs.rgName }} location=$LOCATION \
             --location $LOCATION
             
